@@ -1,0 +1,30 @@
+site_name: "nmapUnleashed Docs"
+site_url: https://docs.nmap-unleashed.com
+repo_url: https://github.com/sharkeonix/nmap-unleashed
+site_dir: site
+docs_dir: docs
+theme:
+  name: material
+  palette:
+    - scheme: slate  # dark mode
+      primary: cyan
+      accent: teal
+  font:
+    text: Roboto
+    code: Roboto Mono
+  features:
+    - navigation.top
+    - navigation.expand
+    - instant
+nav:
+  - nmapUnleashed(nu) Docs: README.md
+  - ✨ Feature Summary: feature-summary.md
+  - 📦 Installation and Requirements: installation-and-requirements.md
+  - 🚀 Quick Usage and Examples: quick-usage-and-examples.md
+  - 🧰 Commands and Options: commands-and-options.md
+  - ⚙️ Configuration and Presets: configuration-and-presets.md
+  - 📊 Dashboard Overview: dashboard-overview.md
+  - 🛠️ Troubleshooting and FAQ: troubleshooting-and-faq.md
+  - 🤝 Contributing and Contact: contributing-and-contact.md
+  - 📄 License: https://license.nmap-unleashed.com
+  - 📜 Changelog: https://github.com/sharkeonix/nmap-unleashed/#-changelog

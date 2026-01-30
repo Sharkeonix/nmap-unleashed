@@ -1,0 +1,6 @@
+typer
+typing-extensions
+rich
+psutil
+prompt_toolkit
+json5
