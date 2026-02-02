@@ -25,7 +25,7 @@
 - [🧰 Commands and Options](/#-commands-and-options)
 - [🎬 Showcase](/#-showcase)
 - [📄 License](https://license.nmap-unleashed.com)
-- [🤝 Contributing and Contact](/docs/contributing.md)
+- [🤝 Contributing and Contact](/#-contributing--credits-and-contact)
 - [📜 Changelog](/#-changelog)
 
 <br>
