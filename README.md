@@ -16,6 +16,8 @@
 
 **nmapUnleashed (nu)** is a modern CLI wrapper for [Nmap](https://nmap.org/), designed to make network scanning more comfortable and effective. Nmap is THE tool for penetration testing and network auditing, you can use `nu` just like Nmap with all its familiar commands but with extended features such as multithreading, easy scan management, and improved overview of your scans and more.
 
+![Dashboard](/docs/assets/dashboard.png)
+
 **Contents**
 - [✨ Feature Summary](/#-feature-summary)
 - [📦 Installation and Requirements](/#-installation-and-requirements)
