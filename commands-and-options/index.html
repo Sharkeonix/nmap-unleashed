@@ -807,8 +807,9 @@
 For the official Nmap parameters, that nmapUnleashed inheritates, please checkout the official <a href="https://nmap.org/book/man.html">Nmap docs</a>.
 For permanent changes the <a href="/docs/configuration-and-presets.md">config file</a> can be edited.
 For detailed information please visit the <img alt="docs" src="/docs/README.md" />.</p>
-<p><em>(Only <code>-v</code>, <code>-oN</code>, <code>-oX</code>, <code>-oS</code>, <code>-oG</code> and <code>-oA</code> are not available as these functions are handeld through nmapUnleashed.)</em></p>
-<p>After nmapUnleashed finishes, a <code>dashboard.txt</code> file is generated containing a complete overview of all performed scans, results, and statuses.</p>
+<p><em>(Only <code>-v</code>, <code>-iL</code>, <code>-oN</code>, <code>-oX</code>, <code>-oS</code>, <code>-oG</code> and <code>-oA</code> are not available as these functions are handeld through nmapUnleashed.)</em></p>
+<p>After nmapUnleashed finishes, a <code>dashboard.txt</code> file is generated containing a complete overview of all performed scans and their statuses.<br>
+Also, all scan results are merged into <code>scans.xml</code> and <code>scans.html</code>, for centralized inspection and post-processing.</p>
 <h4 id="usage">Usage</h4>
 <pre><code class="language-bash">Usage: nmapUnleashed [OPTIONS] [TARGETS]...
 </code></pre>
@@ -931,6 +932,24 @@ For detailed information please visit the <img alt="docs" src="/docs/README.md" 
 <td style="text-align: center;">N/A</td>
 <td style="text-align: center;">False</td>
 <td>Do not create the dashboard.txt file (holding an overview over performed scans and their states).</td>
+</tr>
+<tr>
+<td><code>-ns</code> /<br> <code>--no-scans</code></td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">False</td>
+<td>Do not create the scans.xml and scans.html file (holding the merged scan results).</td>
+</tr>
+<tr>
+<td><code>-os</code> /<br> <code>--only-scans</code></td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">False</td>
+<td>Only create the scans.xml and scans.html file (holding the merged scan results) and no files for each individual scan.</td>
+</tr>
+<tr>
+<td><code>-oc</code> /<br> <code>--original-colors</code></td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">False</td>
+<td>Do not tamper the scans.html and keep nmap's original color scheme.</td>
 </tr>
 </tbody>
 </table>

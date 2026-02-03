@@ -660,15 +660,16 @@
 <h1 id="nmapunleashed-docs"><a href="/docs/README.md">nmapUnleashed Docs</a></h1>
 <h2 id="quick-usage-and-examples">🚀 Quick Usage and Examples</h2>
 <p>nmapUnleashed is intended to feel familiar to <a href="https://nmap.org/">Nmap</a> users while adding scan management and productivity features.</p>
-<p>After nmapUnleashed finishes, a <code>dashboard.txt</code> file is generated containing a complete overview of all performed scans, results, and statuses.</p>
+<p>After nmapUnleashed finishes, a <code>dashboard.txt</code> file is generated containing a complete overview of all performed scans and their statuses.<br>
+Also, all scan results are merged into <code>scans.xml</code> and <code>scans.html</code>, for centralized inspection and post-processing.</p>
 <p><em>Config file location: <code>~/.config/nmapUnleashed/nmapUnleashed.conf</code></em></p>
 <p><strong>Basic Scan</strong></p>
 <pre><code class="language-bash"># Classic Nmap scan of all ports with version detection.
 nu -d -p- -A scanme.nmap.org
 </code></pre>
 <p><strong>Powerfull target loading and custom multithreading</strong></p>
-<pre><code class="language-bash"># Scan multiple targets specified as IPs, CIDRs, or files in 8 parallel scans.
-nu -th 8 -p- -A scanme.nmap.org 192.168.178.0/24 targets.txt
+<pre><code class="language-bash"># Scan multiple targets specified as IPs, CIDRs, or files in 8 parallel scans and only create merged scan results (scans.xml, scans.html).
+nu -th 8 -p- -A scanme.nmap.org 192.168.178.0/24 targets.txt -os
 </code></pre>
 <p><strong>Using predefined parameter sets / presets (nmap and unleashed parameter)</strong></p>
 <pre><code class="language-bash"># Define parameter sets / presets, in config, and load any set with a single command to start scans faster.
