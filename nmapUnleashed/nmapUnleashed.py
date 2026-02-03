@@ -38,6 +38,7 @@ from prompt_toolkit.widgets import TextArea as prompt_toolkitTextArea
 import glob
 import json5 as json
 import shutil
+import xml.etree.ElementTree as ET
 
 CONFIG_FILE_CONTENT = '''
 // nmapUnleashed Config
@@ -87,7 +88,11 @@ CONFIG_FILE_CONTENT = '''
     "FEATURE_LOADER_PARALLEL_REFRESHRATE": 0.2, //default: 0.2, seconds, how long to wait before parallel features are executed again
     "RECOVERY_FILE": ".nmapUnleashed.recover", //default: ".nmapUnleashed.recover", File tracking passed args, options and targets to help recovery
     "TRACK_STATE_FILE": ".nmapUnleashed.stateTrack", //default: ".nmapUnleashed.stateTrack", File tracking scan state to help recovery
-    "TRACK_TARGET_STATE_REFRESHRATE": 1 //default: 1, seconds, how often the target states are saved to disk
+    "TRACK_TARGET_STATE_REFRESHRATE": 1, //default: 1, seconds, how often the target states are saved to disk
+    "MERGED_SCAN_FILE": "scans", // default: "scans", filename for merged scans as xml and html
+    "NO_SCANS_FILE": false, // default: false, if scans.xml and scans.html should not be created
+    "ONLY_SCANS_FILE": false, // default: false, if only scans.xml and scans.html should be created and no individual scan files
+    "ORIGINAL_COLORS": false // default: false, if nmap's original color scheme should be used for scans.html or not
 }
 //--------------------------------------------------
 
@@ -158,8 +163,8 @@ AUTHOR = "Sharkeonix"
 WEBSITE = "https://nmap-unleashed.com"
 DOCS = "https://docs.nmap-unleashed.com"
 LICENSE = "https://license.nmap-unleashed.com"
-VERSION = "v1.0.0"
-LASTUPDATEDATE= "2026-01-31"
+VERSION = "v1.1.0"
+LASTUPDATEDATE= "2026-02-03"
 LOGO = f'''
 [{COLORS["cyan"]} bold].__   __. .___  ___.      ___      .______      [/{COLORS["cyan"]} bold][{COLORS["cyan2"]} bold] __    __  .__   __.  __       _______     ___           _______. __    __   _______  _______   [/{COLORS["cyan2"]} bold]
 [{COLORS["cyan"]} bold]|  \\ |  | |   \\/   |     /   \\     |   _  \\ [/{COLORS["cyan"]} bold][{COLORS["cyan2"]} bold]    |  |  |  | |  \\ |  | |  |     |   ____|   /   \\         /       ||  |  |  | |   ____||       \\  [/{COLORS["cyan2"]} bold]
@@ -183,17 +188,23 @@ META = {
 EXAMPLES =f'''
 [bold]Examples[/bold]
 --------------------
-  nu -d -p- -A scanme.nmap.org \t\t\t\t\t\t# Classic Nmap scan of all ports with version detection.
-  nu -th 8 -p- -A scanme.nmap.org 192.168.178.0/24 targets.txt \t\t# Scan multiple targets specified as IPs, CIDRs, or files in 8 parallel scans.
-  nu -ps basic scanme.nmap.org \t\t\t\t\t\t# Use a predefined parameter set (see [italic]{CONFIG_FILE_LOCATION}[/italic] for custom sets).
-  nu -th 8 -kt 120 -nwr 1000 -nwt 1000 -ko -p- -sV scanme.nmap.org \t# 8 threads, auto-abort after 120 min, warn if network >1000 KBps, keep files for non-online targets.
-  nu -ko -nf -rf "xml;html;gnamp" -p- -A fd12:3456:789a::/28 \t\t# Keep scan files for non-online targets, store all scans in the current folder, remove specified file types after scan.
-  nu -p- -A 10.10.2.1 10.10.2.2 "10.10.1.0/24=--top-ports 100 -A" -ex 10.10.1.5\t# Specify Nmap parameters and targets, set custom parameters for a target network, and exclude one target of the specified network.
+[{COLORS["skyBlue"]}]# Classic Nmap scan of all ports with version detection.[/{COLORS["skyBlue"]}]
+  nu -d -p- -A scanme.nmap.org
+[{COLORS["skyBlue"]}]# Scan multiple targets specified as IPs, CIDRs, or files in 8 parallel scans and only create merged scan results (scans.xml, scans.html).[/{COLORS["skyBlue"]}]
+  nu -th 8 -p- -A scanme.nmap.org 192.168.178.0/24 targets.txt -os
+[{COLORS["skyBlue"]}]# Use a predefined parameter set (see [italic]{CONFIG_FILE_LOCATION}[/italic] for custom sets).[/{COLORS["skyBlue"]}]
+  nu -ps basic scanme.nmap.org
+[{COLORS["skyBlue"]}]# 8 threads, auto-abort after 120 min, warn if network >1000 KBps, keep files for non-online targets.[/{COLORS["skyBlue"]}]
+  nu -th 8 -kt 120 -nwr 1000 -nwt 1000 -ko -p- -sV scanme.nmap.org
+[{COLORS["skyBlue"]}]# Keep scan files for non-online targets, store all scans in the current folder, remove specified file types after scan.[/{COLORS["skyBlue"]}]
+  nu -ko -nf -rf "xml;html;gnamp" -p- -A fd12:3456:789a::/28
+[{COLORS["skyBlue"]}]# Specify Nmap parameters and targets, set custom parameters for a target network, and exclude one target of the specified network.[/{COLORS["skyBlue"]}]
+  nu -p- -A 10.10.2.1 10.10.2.2 "10.10.1.0/24=--top-ports 100 -A" -ex 10.10.1.5
 --------------------
 For more information please visit the nmapUnleashed docs at {DOCS}.
 
 [{COLORS["grey69"]}]This software is free for personal and small-company use (<50 employees).
-Commercial use requires a license. See {LICENSE} or contact sharkeonix@pm.me.[{COLORS["grey69"]}]
+Commercial use requires a license. See {LICENSE} or contact sharkeonix@pm.me.[/{COLORS["grey69"]}]
 '''
 ################################
 
@@ -228,6 +239,9 @@ def main(
         noFolderPerScan: Annotated[bool, typer.Option('-nf', "--no-folder", help="Store all scan files in the current directory instead of creating a subfolder per scan.", rich_help_panel=f'[{COLORS["lightCyan"]} bold]nmapUnleashed Output Options[/{COLORS["lightCyan"]} bold]')] = CONFIG["configuration"]["NO_FOLDER_PER_SCAN"],
         outputPattern: Annotated[str, typer.Option('-op', "--output-pattern", help="Set the naming pattern for scan files and folders (e.g., {target}_{parameter});{target} is mandatory.", rich_help_panel=f'[{COLORS["lightCyan"]} bold]nmapUnleashed Output Options[/{COLORS["lightCyan"]} bold]', metavar="<outputPattern>")] = CONFIG["configuration"]["OUTPUT_PATTERN"],
         noDashboardFile: Annotated[bool, typer.Option('-nd', "--no-dashboard", help="Do not create the dashboard.txt file (holding an overview over performed scans and their states).", rich_help_panel=f'[{COLORS["lightCyan"]} bold]nmapUnleashed Output Options[/{COLORS["lightCyan"]} bold]')] = CONFIG["configuration"]["NO_DASHBOARD_FILE"],
+        noScansFile: Annotated[bool, typer.Option('-ns', "--no-scans", help="Do not create the scans.xml and scans.html file (holding the merged scan results).", rich_help_panel=f'[{COLORS["lightCyan"]} bold]nmapUnleashed Output Options[/{COLORS["lightCyan"]} bold]')] = CONFIG["configuration"]["NO_SCANS_FILE"],
+        onlyScansFile: Annotated[bool, typer.Option('-os', "--only-scans", help="Only create the scans.xml and scans.html file (holding the merged scan results) and no files for each individual scan.", rich_help_panel=f'[{COLORS["lightCyan"]} bold]nmapUnleashed Output Options[/{COLORS["lightCyan"]} bold]')] = CONFIG["configuration"]["ONLY_SCANS_FILE"],
+        originalColors: Annotated[bool, typer.Option('-oc', "--original-colors", help="Do not tamper the scans.html and keep nmap's original color scheme.", rich_help_panel=f'[{COLORS["lightCyan"]} bold]nmapUnleashed Output Options[/{COLORS["lightCyan"]} bold]')] = CONFIG["configuration"]["ORIGINAL_COLORS"],
 
         # Misc options
         config: Annotated[list[str], typer.Option('-cf', "--config", help=f'Temporarily adjust configuration settings for this run (see {CONFIG_FILE_LOCATION} for permanent changes).', rich_help_panel=f'[{COLORS["lightCyan"]} bold]nmapUnleashed Misc Options[/{COLORS["lightCyan"]} bold]', metavar="\"<configKey>:<value>;...\"")] = None,
@@ -383,6 +397,12 @@ def main(
     CONFIG["configuration"]["KEEP_OFFLINE_FILES"] = keepOfflineFiles
     # Adjust config if dashboard.txt should be created or not
     CONFIG["configuration"]["NO_DASHBOARD_FILE"] = noDashboardFile
+    # Adjust config if scans.xml and scans.html should be created or not
+    CONFIG["configuration"]["NO_SCANS_FILE"] = noScansFile
+    # Adjust config if only scans.xml and scans.html should be created and no individual scan files
+    CONFIG["configuration"]["ONLY_SCANS_FILE"] = onlyScansFile
+    # Adjust config if nmap's original color scheme should be used for the scans.html
+    CONFIG["configuration"]["ORIGINAL_COLORS"] = originalColors
     # Adjust config for static dashboard size
     if fixedDashboardSize:
         CONFIG["configuration"]["DYNAMIC_DASHBOARD_SIZE"] = False
@@ -705,6 +725,10 @@ class Scheduler():
     RECOVERY_FILE = ".nmapUnleashed.recover" # default: ".nmapUnleashed.recover", File tracking passed args, options and targets to help recovery
     TRACK_STATE_FILE = ".nmapUnleashed.stateTrack" # default: ".nmapUnleashed.stateTrack", File tracking scan state to help recovery
     TRACK_TARGET_STATE_REFRESHRATE = 1 # default: 1, seconds, how often the target states are saved to disk
+    MERGED_SCAN_FILE = "scans" # default: "scans", filename for merged scans as xml and html
+    NO_SCANS_FILE = False # default: false, if scans.xml and scans.html should not be created
+    ONLY_SCANS_FILE = False # default: false, if only scans.xml and scans.html should be created and no individual scan files
+    ORIGINAL_COLORS = False # default: false, if nmap's original color scheme should be used for scans.html or not
     ##########################
 
     def __init__(self, rawMode, meta: dict, colors: dict, config, targets: list, parameterOfTargets: dict, threads: int, parameter: str, options):
@@ -866,7 +890,8 @@ class Scheduler():
         if self.DASHBOARD:
             self.dashboardLive.refresh()
             self.dashboardLive.stop()'''
-
+        #execute post features
+        self.featureLoaderPost()
         #Cleanup
         self.cleanup()
 
@@ -1650,14 +1675,26 @@ class Scheduler():
             if not Scheduler.NO_FOLDER_PER_SCAN and os.path.exists(f'{path}/{fileName}'):
                 path = f'{path}/{fileName}'
             # If option / config was set, clean up and remove scan files
-            if Scheduler.REMOVE_FILES != "":
+            if Scheduler.REMOVE_FILES != "" and not Scheduler.ONLY_SCANS_FILE:
                 try:
                     for fileType in Scheduler.REMOVE_FILES.split(";"):
                         os.remove(f'{path}/{fileName}.{fileType}')
                 except:
                     pass
+            # if option was set remove all individual scan files
+            if Scheduler.ONLY_SCANS_FILE:
+                for fileType in ["xml","html","nmap","gnmap"]:
+                    try:
+                        os.remove(f'{path}/{fileName}.{fileType}')
+                    except:
+                        pass
+                    if path != os.getcwd():
+                        try:
+                            os.rmdir(path)
+                        except:
+                            pass
             # Remove all files if target was not online, except when option / config tells to keep them
-            if not Scheduler.KEEP_OFFLINE_FILES and self.targetsStats[targetID]["stats"]["targetState"] != "online":
+            if not Scheduler.KEEP_OFFLINE_FILES and self.targetsStats[targetID]["stats"]["targetState"] != "online" and not Scheduler.ONLY_SCANS_FILE:
                 # Try to remove each file type
                 for fileType in ["nmap", "gnmap", "xml", "html"]:
                     try:
@@ -1671,6 +1708,11 @@ class Scheduler():
     #Feature loader pre, for functions previous to main function run
     def featureLoaderPre(self):
         return
+
+    # Feature loader post, for functions after main execution before cleanup
+    def featureLoaderPost(self):
+        #Merge scans into one xml / html
+        self.mergeScanResults()
 
     #Here the nmap scan is performed. This function is passed to the threads.
     def scan(self, target: str, parameter: str, threadID: int, targetID: int, fileName: str):
@@ -1717,8 +1759,6 @@ class Scheduler():
         if self.dashboardInteractionState["killPending"] and targetID == self.dashboardInteractionState["selectedTarget"]:
             self.dashboardInteractionState["killPending"] = False
 
-
-
     #Try to load external config
     def loadConfig(self, config):
         # Trying to load external config
@@ -1748,10 +1788,70 @@ class Scheduler():
                 Scheduler.RECOVERY_FILE = CONFIG["configuration"]["RECOVERY_FILE"]
                 Scheduler.TRACK_STATE_FILE = CONFIG["configuration"]["TRACK_STATE_FILE"]
                 Scheduler.TRACK_TARGET_STATE_REFRESHRATE = CONFIG["configuration"]["TRACK_TARGET_STATE_REFRESHRATE"]
+                Scheduler.MERGED_SCAN_FILE = CONFIG["configuration"]["MERGED_SCAN_FILE"]
+                Scheduler.NO_SCANS_FILE = CONFIG["configuration"]["NO_SCANS_FILE"]
+                Scheduler.ONLY_SCANS_FILE = CONFIG["configuration"]["ONLY_SCANS_FILE"]
+                Scheduler.ORIGINAL_COLORS = CONFIG["configuration"]["ORIGINAL_COLORS"]
                 # Store parameter sets
                 self.parameterSets = CONFIG["parameterSets"]
         except:
             pass
+
+    #Merge scan results into one xml / html
+    def mergeScanResults(self):
+        if Scheduler.NO_SCANS_FILE: return
+        templateHead='''<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<nmaprun scanner="nmapUnleashed" args="<<command>>" start="1770144034" startstr="<<starttime>>" version="7.94SVN" xmloutputversion="1.05">'''
+        templateTail='''</nmaprun>'''
+        hosthint = []
+        host = []
+        #load each xml and extract hosthint and host elements
+        for targetID in range(len(self.TARGETS)):
+            # Create path to scans xml file
+            fileName = self.createFilename(self.targetsStats[targetID]["target"])
+            # If option is not disabled prepand folder for scan based on filename
+            path = os.getcwd()
+            if not Scheduler.NO_FOLDER_PER_SCAN and os.path.exists(f'{path}/{fileName}'):
+                path = f'{path}/{fileName}'
+            file = f'{path}/{fileName}.xml'
+            # Load as xml and extract elements
+            xml = ET.parse(file)
+            for element in xml.getroot():
+                if element.tag == "hosthint":
+                    hosthint.append(ET.tostring(element).decode('utf8'))
+                if element.tag == "host":
+                    host.append(ET.tostring(element).decode('utf8'))
+        # create merged xml file
+        ##parts from dashboard command
+        ###really stupid, i know. Makes it more compatible for older python versions
+        stupidQuote = "'" #need to use single quotes here even when double were used, otherwise xml breaks
+        stupidNewline = '\n'
+        command =  f'nmapUnleashed {" ".join([var if "=" not in var else stupidQuote + var + stupidQuote for var in sys.argv[1:]])}{"" if not self.options["parameterSet"] else " | {" + self.options["parameterSet"] + ": " + self.parameterSets[self.options["parameterSet"]] + "}"}'
+        mergedXml = f'{templateHead.replace("<<command>>", command).replace("<<starttime>>", self.timeStart.strftime(Scheduler.DATETIME_STR_FORMAT))}{stupidNewline.join(map(str, hosthint))}{stupidNewline}{stupidNewline.join(map(str, host))}{templateTail}'
+        with open(f'{Scheduler.MERGED_SCAN_FILE}.xml', "w") as file:
+            file.write(mergedXml)
+        # Use xsltproc to create html version of merged scan file
+        processConvert = subprocess.Popen(["xsltproc", "-o", f'{Scheduler.MERGED_SCAN_FILE}.html', f'{Scheduler.MERGED_SCAN_FILE}.xml'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, cwd=os.getcwd())
+        processConvert.wait()
+        # Patch html to nmapUnleashed style
+        if Scheduler.ORIGINAL_COLORS: return
+        patched = ""
+        with open(f'{Scheduler.MERGED_SCAN_FILE}.html', "r") as file:
+            patched = file.read()
+        #change headline
+        patched = patched.replace('Nmap Scan Report', "nmapUnleashed Scan Report")
+        #change main header color
+        patched = patched.replace('#2A0D45', "#069aeb")
+        #change section header color
+        patched = patched.replace('#E1E1E1', "#02f4ce")
+        #change background color
+        patched = patched.replace('#CCFFCC', "#8cd8fe")
+        with open(f'{Scheduler.MERGED_SCAN_FILE}.html', "w") as file:
+            file.write(patched)
+
+
 
 
 def checkDependencies():

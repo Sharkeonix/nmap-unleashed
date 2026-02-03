@@ -8,7 +8,7 @@
 [![License](https://img.shields.io/badge/📄-Dual--License-069aeb?labelColor=01cef4)](https://license.nmap-unleashed.com)
 # nmapUnleashed (nu)
 
-![Version](https://img.shields.io/badge/version-v1.0.0-brightgreen)
+![Version](https://img.shields.io/badge/version-v1.1.0-brightgreen)
 ![Status](https://img.shields.io/badge/status-stable-brightgreen)
 ![Python](https://img.shields.io/badge/python-3.11+-yellow)
 ![Platform](https://img.shields.io/badge/platform-linux-yellow)
@@ -62,8 +62,9 @@
 - **Parameter sets / presets**  
   Define parameter sets / presets and load any set with a single command to start scans faster.
 
-- **Persistent dashboard summary**  
-  After nmapUnleashed finishes, a `dashboard.txt` file is generated containing a complete overview of all performed scans, results, and statuses.
+- **Persistent dashboard and scan summary**  
+  After nmapUnleashed finishes, a `dashboard.txt` file is generated containing a complete overview of all performed scans and their statuses.<br>
+  Also, all scan results are merged into `scans.xml` and `scans.html`, for centralized inspection and post-processing.
 
 - **…and more**  
   Check out the [docs](https://docs.nmap-unleashed.com) and help page for all features.
@@ -112,7 +113,8 @@ pipx install
 
 nmapUnleashed is intended to feel familiar to [Nmap](https://nmap.org/) users while adding scan management and productivity features.
 
-After nmapUnleashed finishes, a `dashboard.txt` file is generated containing a complete overview of all performed scans, results, and statuses.
+After nmapUnleashed finishes, a `dashboard.txt` file is generated containing a complete overview of all performed scans and their statuses.<br>
+Also, all scan results are merged into `scans.xml` and `scans.html`, for centralized inspection and post-processing.
 
 _Config file location: `~/.config/nmapUnleashed/nmapUnleashed.conf`_
 
@@ -124,8 +126,8 @@ nu -d -p- -A scanme.nmap.org
 
 **Powerfull target loading and custom multithreading**
 ```bash
-# Scan multiple targets specified as IPs, CIDRs, or files in 8 parallel scans.
-nu -th 8 -p- -A scanme.nmap.org 192.168.178.0/24 targets.txt
+# Scan multiple targets specified as IPs, CIDRs, or files in 8 parallel scans and only create merged scan results (scans.xml, scans.html).
+nu -th 8 -p- -A scanme.nmap.org 192.168.178.0/24 targets.txt -os
 ```
 
 **Using predefined parameter sets / presets (nmap and unleashed parameter)**
@@ -165,9 +167,10 @@ For the official Nmap parameters, that nmapUnleashed inheritates, please checkou
 For permanent changes the [config file](/docs/configuration-and-presets.md) can be edited.
 For detailed information please visit the ![docs](https://docs.nmap-unleashed.com).
 
-_(Only `-v`, `-oN`, `-oX`, `-oS`, `-oG` and `-oA` are not available as these functions are handeld through nmapUnleashed.)_
+_(Only `-v`, `-iL`, `-oN`, `-oX`, `-oS`, `-oG` and `-oA` are not available as these functions are handeld through nmapUnleashed.)_
 
-After nmapUnleashed finishes, a `dashboard.txt` file is generated containing a complete overview of all performed scans, results, and statuses.
+After nmapUnleashed finishes, a `dashboard.txt` file is generated containing a complete overview of all performed scans and their statuses.<br>
+Also, all scan results are merged into `scans.xml` and `scans.html`, for centralized inspection and post-processing.
 
 #### Usage
 
@@ -207,11 +210,14 @@ You can also assign custom Nmap parameters per target using the syntax:
 #### Output Options
 | Option                 |      Value Type     | Default Value | Description                                                                                           |
 |------------------------|:-------------------:|:-------------:|-------------------------------------------------------------------------------------------------------|
-| `-ko` /<br> `--keep-offline`   |          N/A        |      False    | Preserve scan files for non-online targets; they are always listed in dashboard.txt.                  |
-| `-rf` /<br> `--remove-files`   | \<listOfFileTypes\> |      None     | Delete specified scan files after completion (e.g., "xml" or "xml;gnmap").                            |
-| `-nf` /<br> `--no-folder`      |          N/A        |      False    | Store all scan files in the current directory instead of creating a subfolder per scan.               |
-| `-op` /<br> `--output-pattern` | \<outputPattern\>   | {target}      | Set the naming pattern for scan files and folders (e.g., {target}_{parameter});{target} is mandatory. |
-| `-nd` /<br> `--no-dashboard`   |          N/A        |      False    | Do not create the dashboard.txt file (holding an overview over performed scans and their states).     |
+| `-ko` /<br> `--keep-offline`    |          N/A        |      False    | Preserve scan files for non-online targets; they are always listed in dashboard.txt.                                       |
+| `-rf` /<br> `--remove-files`    | \<listOfFileTypes\> |      None     | Delete specified scan files after completion (e.g., "xml" or "xml;gnmap").                                                 |
+| `-nf` /<br> `--no-folder`       |          N/A        |      False    | Store all scan files in the current directory instead of creating a subfolder per scan.                                    |
+| `-op` /<br> `--output-pattern`  | \<outputPattern\>   | {target}      | Set the naming pattern for scan files and folders (e.g., {target}_{parameter});{target} is mandatory.                      |
+| `-nd` /<br> `--no-dashboard`    |          N/A        |      False    | Do not create the dashboard.txt file (holding an overview over performed scans and their states).                          |
+| `-ns` /<br> `--no-scans`        |          N/A        |      False    | Do not create the scans.xml and scans.html file (holding the merged scan results).                                         |
+| `-os` /<br> `--only-scans`      |          N/A        |      False    | Only create the scans.xml and scans.html file (holding the merged scan results) and no files for each individual scan.     |
+| `-oc` /<br> `--original-colors` |          N/A        |      False    | Do not tamper the scans.html and keep nmap's original color scheme.                                                        |
 
 #### Misc Options
 | Option               |           Value Type          | Default Value | Description                                                                                        |
@@ -275,9 +281,10 @@ sharkeonix@pm.me
 <br>
 
 ### 📜 Changelog
-| Version | Release Date | Description      |
-|---------|--------------|------------------|
-| v1.0.0  | 31.01.2026   | Official Release |
+| Version | Release Date | Description                                                                                         |
+|---------|--------------|-----------------------------------------------------------------------------------------------------|
+| v1.1.0  | 03.02.2026   | Adding merged scans feature (`scans.xml`, `scans.html`) and relating options (`-ns`, `-os`, `-oc`). |
+| v1.0.0  | 31.01.2026   | Official Release                                                                                    |
 
 <br>
 
