@@ -13,7 +13,8 @@
 
 nmapUnleashed is intended to feel familiar to [Nmap](https://nmap.org/) users while adding scan management and productivity features.
 
-After nmapUnleashed finishes, a `dashboard.txt` file is generated containing a complete overview of all performed scans, results, and statuses.
+After nmapUnleashed finishes, a `dashboard.txt` file is generated containing a complete overview of all performed scans and their statuses.<br>
+Also, all scan results are merged into `scans.xml` and `scans.html`, for centralized inspection and post-processing.
 
 _Config file location: `~/.config/nmapUnleashed/nmapUnleashed.conf`_
 
@@ -25,8 +26,8 @@ nu -d -p- -A scanme.nmap.org
 
 **Powerfull target loading and custom multithreading**
 ```bash
-# Scan multiple targets specified as IPs, CIDRs, or files in 8 parallel scans.
-nu -th 8 -p- -A scanme.nmap.org 192.168.178.0/24 targets.txt
+# Scan multiple targets specified as IPs, CIDRs, or files in 8 parallel scans and only create merged scan results (scans.xml, scans.html).
+nu -th 8 -p- -A scanme.nmap.org 192.168.178.0/24 targets.txt -os
 ```
 
 **Using predefined parameter sets / presets (nmap and unleashed parameter)**

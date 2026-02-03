@@ -33,7 +33,8 @@
   Define parameter sets / presets and load any set with a single command to start scans faster.
 
 - **Persistent dashboard summary**  
-  After nmapUnleashed finishes, a `dashboard.txt` file is generated containing a complete overview of all performed scans, results, and statuses.
+  After nmapUnleashed finishes, a `dashboard.txt` file is generated containing a complete overview of all performed scans and their statuses.<br>
+  Also, all scan results are merged into `scans.xml` and `scans.html`, for centralized inspection and post-processing.
 
 - **…and more**  
   Check out the docs and help page for all features.
