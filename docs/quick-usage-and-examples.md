@@ -24,7 +24,7 @@ _Config file location: `~/.config/nmapUnleashed/nmapUnleashed.conf`_
 nu -d -p- -A scanme.nmap.org
 ```
 
-**Powerfull target loading and custom multithreading**
+**Powerful target loading and custom multithreading**
 ```bash
 # Scan multiple targets specified as IPs, CIDRs, or files in 8 parallel scans and only create merged scan results (scans.xml, scans.html).
 nu -th 8 -p- -A scanme.nmap.org 192.168.178.0/24 targets.txt -os
