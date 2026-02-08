@@ -8,7 +8,7 @@
 [![License](https://img.shields.io/badge/📄-Dual--License-069aeb?labelColor=01cef4)](https://license.nmap-unleashed.com)
 # nmapUnleashed (nu)
 
-![Version](https://img.shields.io/badge/version-v1.1.0-brightgreen)
+![Version](https://img.shields.io/badge/version-v1.1.1-brightgreen)
 ![Status](https://img.shields.io/badge/status-stable-brightgreen)
 ![Python](https://img.shields.io/badge/python-3.11+-yellow)
 ![Platform](https://img.shields.io/badge/platform-linux-yellow)
@@ -281,10 +281,11 @@ sharkeonix@pm.me
 <br>
 
 ### 📜 Changelog
-| Version | Release Date | Description                                                                                         |
-|---------|--------------|-----------------------------------------------------------------------------------------------------|
-| v1.1.0  | 03.02.2026   | Adding merged scans feature (`scans.xml`, `scans.html`) and relating options (`-ns`, `-os`, `-oc`). |
-| v1.0.0  | 31.01.2026   | Official Release                                                                                    |
+| Version | Release Date | Description                                                                                                                                                                                                               |
+|---------|--------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| v1.1.1  | 08.02.2026   | Quickfix. Aborted scans don't have a proper xml file which made the merge scans feature crash. Custom xml elements are now added so aborted scans are listed in scans.xml and scans.html with note that scan was aborted. |
+| v1.1.0  | 03.02.2026   | Adding merged scans feature (`scans.xml`, `scans.html`) and relating options (`-ns`, `-os`, `-oc`).                                                                                                                       |
+| v1.0.0  | 31.01.2026   | Official Release                                                                                                                                                                                                          |
 
 <br>
 

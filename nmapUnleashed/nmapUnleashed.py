@@ -163,8 +163,8 @@ AUTHOR = "Sharkeonix"
 WEBSITE = "https://nmap-unleashed.com"
 DOCS = "https://docs.nmap-unleashed.com"
 LICENSE = "https://license.nmap-unleashed.com"
-VERSION = "v1.1.0"
-LASTUPDATEDATE= "2026-02-03"
+VERSION = "v1.1.1"
+LASTUPDATEDATE= "2026-02-08"
 LOGO = f'''
 [{COLORS["cyan"]} bold].__   __. .___  ___.      ___      .______      [/{COLORS["cyan"]} bold][{COLORS["cyan2"]} bold] __    __  .__   __.  __       _______     ___           _______. __    __   _______  _______   [/{COLORS["cyan2"]} bold]
 [{COLORS["cyan"]} bold]|  \\ |  | |   \\/   |     /   \\     |   _  \\ [/{COLORS["cyan"]} bold][{COLORS["cyan2"]} bold]    |  |  |  | |  \\ |  | |  |     |   ____|   /   \\         /       ||  |  |  | |   ____||       \\  [/{COLORS["cyan2"]} bold]
@@ -1805,10 +1805,19 @@ class Scheduler():
 <?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
 <nmaprun scanner="nmapUnleashed" args="<<command>>" start="1770144034" startstr="<<starttime>>" version="7.94SVN" xmloutputversion="1.05">'''
         templateTail='''</nmaprun>'''
+        templateNotFinished='''<host><status state="<<status>>" reason="syn-ack" reason_ttl="0"/>
+<address addr="<<target>>"/>
+<note><<note>></note>
+</host>'''
         hosthint = []
         host = []
         #load each xml and extract hosthint and host elements
         for targetID in range(len(self.TARGETS)):
+            # if scan was aborted or error occurred no scan data is available in xml, add entry with note for aborted or crashed scan
+            if self.targetsStats[targetID]["status"] != "completed":
+                status = self.targetsStats[targetID]["status"]
+                host.append(templateNotFinished.replace("<<status>>", status).replace("<<target>>", self.targetsStats[targetID]["target"]).replace("<<note>>", "Scan was aborted, no data available." if status == "aborted" else "Error occurred during scan execution, no data available." if status == "error" else f'No data available. Scan status: {status}'))
+                continue
             # Create path to scans xml file
             fileName = self.createFilename(self.targetsStats[targetID]["target"])
             # If option is not disabled prepand folder for scan based on filename
