@@ -1,3 +1,7 @@
+> [!NOTE]
+> At the end of each quarter, there is a patch day. During this release, all accumulated [features](https://github.com/Sharkeonix/nmap-unleashed/issues?q=state%3Aopen%20label%3Afeature) and [bugs](https://github.com/Sharkeonix/nmap-unleashed/issues?q=state%3Aopen%20label%3Apatchday) are implemented and released together.
+> Only [hotfixes](https://github.com/Sharkeonix/nmap-unleashed/issues?q=state%3Aopen%20label%3Ahotfix) and critical bugs are addressed before the scheduled patch day.
+
 ![Banner](/docs/assets/banner.png)
 [![Home](https://img.shields.io/badge/🏠-Home-069aeb?labelColor=01cef4)](https://github.com/sharkeonix/nmap-unleashed/)
 [![Installation and Requirements](https://img.shields.io/badge/📦-Installation-069aeb?labelColor=01cef4)](https://github.com/sharkeonix/nmap-unleashed/#-installation-and-requirements)
