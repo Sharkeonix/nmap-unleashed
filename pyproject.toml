@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nmapUnleashed"
-version = "0.1.0"
+version = "1.2.1"
 description = "nmapUnleashed (nu) is a modern CLI wrapper for Nmap, designed to make network scanning more comfortable and effective. Nmap is THE tool for penetration testing and network auditing, you can use nu just like Nmap with all its familiar commands but with extended features such as multithreading, easy scan management, and improved overview of your scans and more."
 readme = "README.md"
 requires-python = ">=3.11"

@@ -5,7 +5,7 @@
 [![Commands and Options](https://img.shields.io/badge/🧰-Commands-069aeb?labelColor=01cef4)](https://github.com/sharkeonix/nmap-unleashed/#-commands-and-options)
 [![Docs](https://img.shields.io/badge/📚-Docs-069aeb?labelColor=01cef4)](https://docs.nmap-unleashed.com)
 [![Changelog](https://img.shields.io/badge/📜-Changelog-069aeb?labelColor=01cef4)](https://github.com/sharkeonix/nmap-unleashed/#-changelog)
-[![License](https://img.shields.io/badge/📄-Dual--License-069aeb?labelColor=01cef4)](https://license.nmap-unleashed.com)
+[![License](https://img.shields.io/badge/📄-Apache_2.0_License-069aeb?labelColor=01cef4)](https://license.nmap-unleashed.com)
 
 # [nmapUnleashed Docs](/docs/README.md)
 
@@ -19,7 +19,6 @@ _The process and possibilities for contribution will be announced soon._
 
 Special thanks to the beta testers for their participation and feedback, among them were
 - Anton Kettling, wandton
-
 
 **Contact**
 

@@ -1,5 +1,6 @@
-# This software is free for personal and small-company use (<50 employees).
-# Commercial use requires a license. See https://license.nmap-unleashed.com or contact sharkeonix@pm.me.
+# nmapUnleashed / nu by Sharkeonix
+# https://nmap-unleashed.com
+# https://license.nmap-unleashed.com
 
 ###CLI-Frontend
 #import signal
@@ -163,8 +164,8 @@ AUTHOR = "Sharkeonix"
 WEBSITE = "https://nmap-unleashed.com"
 DOCS = "https://docs.nmap-unleashed.com"
 LICENSE = "https://license.nmap-unleashed.com"
-VERSION = "v1.1.1"
-LASTUPDATEDATE= "2026-02-08"
+VERSION = "v1.2.1"
+LASTUPDATEDATE= "2026-02-17"
 LOGO = f'''
 [{COLORS["cyan"]} bold].__   __. .___  ___.      ___      .______      [/{COLORS["cyan"]} bold][{COLORS["cyan2"]} bold] __    __  .__   __.  __       _______     ___           _______. __    __   _______  _______   [/{COLORS["cyan2"]} bold]
 [{COLORS["cyan"]} bold]|  \\ |  | |   \\/   |     /   \\     |   _  \\ [/{COLORS["cyan"]} bold][{COLORS["cyan2"]} bold]    |  |  |  | |  \\ |  | |  |     |   ____|   /   \\         /       ||  |  |  | |   ____||       \\  [/{COLORS["cyan2"]} bold]
@@ -172,7 +173,7 @@ LOGO = f'''
 [{COLORS["cyan"]} bold]|  . `  | |  |\\/|  |   /  /_\\  \\   |   ___/  [/{COLORS["cyan"]} bold][{COLORS["cyan2"]} bold]   |  |  |  | |  . `  | |  |     |   __|   /  /_\\  \\       \\   \\    |   __   | |   __|  |  |  |  | [/{COLORS["cyan2"]} bold]
 [{COLORS["cyan"]} bold]|  |\\   | |  |  |  |  /  _____  \\  |  |       [/{COLORS["cyan"]} bold][{COLORS["cyan2"]} bold]  |  `--'  | |  |\\   | |  `----.|  |____ /  _____  \\  .----)   |   |  |  |  | |  |____ |  '--'  | [/{COLORS["cyan2"]} bold]
 [{COLORS["cyan"]} bold]|__| \\__| |__|  |__| /__/     \\__\\ | _|      [/{COLORS["cyan"]} bold][{COLORS["cyan2"]} bold]    \\______/  |__| \\__| |_______||_______/__/     \\__\\ |_______/    |__|  |__| |_______||_______/ [/{COLORS["cyan2"]} bold]'''
-INFO = f'Version: {VERSION} | Author: {AUTHOR} | Website: {WEBSITE} | License: {LICENSE}'
+INFO = f'Version: {VERSION} | Author: {AUTHOR} | Website: {WEBSITE} | License: Apache 2.0 - {LICENSE}'
 BANNER = f'{LOGO}\n\n[{COLORS["skyBlue"]}]{INFO}[/{COLORS["skyBlue"]}]'
 META = {
     "AUTHOR": AUTHOR,
@@ -202,9 +203,6 @@ EXAMPLES =f'''
   nu -p- -A 10.10.2.1 10.10.2.2 "10.10.1.0/24=--top-ports 100 -A" -ex 10.10.1.5
 --------------------
 For more information please visit the nmapUnleashed docs at {DOCS}.
-
-[{COLORS["grey69"]}]This software is free for personal and small-company use (<50 employees).
-Commercial use requires a license. See {LICENSE} or contact sharkeonix@pm.me.[/{COLORS["grey69"]}]
 '''
 ################################
 

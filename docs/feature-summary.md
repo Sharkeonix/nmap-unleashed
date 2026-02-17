@@ -5,7 +5,7 @@
 [![Commands and Options](https://img.shields.io/badge/🧰-Commands-069aeb?labelColor=01cef4)](https://github.com/sharkeonix/nmap-unleashed/#-commands-and-options)
 [![Docs](https://img.shields.io/badge/📚-Docs-069aeb?labelColor=01cef4)](https://docs.nmap-unleashed.com)
 [![Changelog](https://img.shields.io/badge/📜-Changelog-069aeb?labelColor=01cef4)](https://github.com/sharkeonix/nmap-unleashed/#-changelog)
-[![License](https://img.shields.io/badge/📄-Dual--License-069aeb?labelColor=01cef4)](https://license.nmap-unleashed.com)
+[![License](https://img.shields.io/badge/📄-Apache_2.0_License-069aeb?labelColor=01cef4)](https://license.nmap-unleashed.com)
 
 # [nmapUnleashed Docs](/docs/README.md)
 
@@ -35,6 +35,10 @@
 - **Persistent dashboard summary**  
   After nmapUnleashed finishes, a `dashboard.txt` file is generated containing a complete overview of all performed scans and their statuses.<br>
   Also, all scan results are merged into `scans.xml` and `scans.html`, for centralized inspection and post-processing.
+
+- **Open Source & Apache 2.0 License**<br>
+  Fully open source under the Apache 2.0 License, allowing commercial use, modification, and redistribution.
+  The license also provides patent protection and does not require derived works to be open-sourced, making nmapUnleashed suitable for professionals, companies, and hobbyists alike.
 
 - **…and more**  
   Check out the docs and help page for all features.

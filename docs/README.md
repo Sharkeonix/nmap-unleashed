@@ -5,13 +5,10 @@
 [![Commands and Options](https://img.shields.io/badge/🧰-Commands-069aeb?labelColor=01cef4)](https://github.com/sharkeonix/nmap-unleashed/#-commands-and-options)
 [![Docs](https://img.shields.io/badge/📚-Docs-069aeb?labelColor=01cef4)](https://docs.nmap-unleashed.com)
 [![Changelog](https://img.shields.io/badge/📜-Changelog-069aeb?labelColor=01cef4)](https://github.com/sharkeonix/nmap-unleashed/#-changelog)
-[![License](https://img.shields.io/badge/📄-Dual--License-069aeb?labelColor=01cef4)](https://license.nmap-unleashed.com)
+[![License](https://img.shields.io/badge/📄-Apache_2.0_License-069aeb?labelColor=01cef4)](https://license.nmap-unleashed.com)
 # [nmapUnleashed Docs](/docs/README.md)
 
 Welcome to the official documentation for **nmapUnleashed (nu)** — a modern CLI wrapper for Nmap designed to make penetration testing and network scanning more comfortable, faster, and efficient.
-
-> This software is free for personal and small-company use (<50 employees).<br>
-> Commercial use requires a license. See [license](https://license.nmap-unleashed.com) or contact sharkeonix@pm.me.
 
 ## 📚 Contents
 

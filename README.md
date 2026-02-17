@@ -9,14 +9,14 @@
 [![Commands and Options](https://img.shields.io/badge/🧰-Commands-069aeb?labelColor=01cef4)](https://github.com/sharkeonix/nmap-unleashed/#-commands-and-options)
 [![Docs](https://img.shields.io/badge/📚-Docs-069aeb?labelColor=01cef4)](https://docs.nmap-unleashed.com)
 [![Changelog](https://img.shields.io/badge/📜-Changelog-069aeb?labelColor=01cef4)](https://github.com/sharkeonix/nmap-unleashed/#-changelog)
-[![License](https://img.shields.io/badge/📄-Dual--License-069aeb?labelColor=01cef4)](https://license.nmap-unleashed.com)
+[![License](https://img.shields.io/badge/📄-Apache_2.0_License-069aeb?labelColor=01cef4)](https://license.nmap-unleashed.com)
 # nmapUnleashed (nu)
 
-![Version](https://img.shields.io/badge/version-v1.1.1-brightgreen)
+![Version](https://img.shields.io/badge/version-v1.2.1-brightgreen)
 ![Status](https://img.shields.io/badge/status-stable-brightgreen)
 ![Python](https://img.shields.io/badge/python-3.11+-yellow)
 ![Platform](https://img.shields.io/badge/platform-linux-yellow)
-[![License](https://img.shields.io/badge/License-Free/Commercial-red?labelColor=grey)](/LICENSE.md)
+[![License](https://img.shields.io/badge/License-Apache_2.0-green?labelColor=grey)](https://license.nmap-unleashed.com)
 
 **nmapUnleashed (nu)** is a modern CLI wrapper for [Nmap](https://nmap.org/), designed to make network scanning more comfortable and effective. Nmap is THE tool for penetration testing and network auditing, you can use `nu` just like Nmap with all its familiar commands but with extended features such as multithreading, easy scan management, and improved overview of your scans and more.
 
@@ -31,11 +31,6 @@
 - [📄 License](https://license.nmap-unleashed.com)
 - [🤝 Contributing and Contact](/#-contributing--credits-and-contact)
 - [📜 Changelog](/#-changelog)
-
-<br>
-
-> This software is free for personal and small-company use (<50 employees).<br>
-> Commercial use requires a license. See [license](https://license.nmap-unleashed.com) or contact sharkeonix@pm.me.
 
 <br>
 
@@ -69,6 +64,10 @@
 - **Persistent dashboard and scan summary**  
   After nmapUnleashed finishes, a `dashboard.txt` file is generated containing a complete overview of all performed scans and their statuses.<br>
   Also, all scan results are merged into `scans.xml` and `scans.html`, for centralized inspection and post-processing.
+
+- **Open Source & Apache 2.0 License**<br>
+  Fully open source under the Apache 2.0 License, allowing commercial use, modification, and redistribution.
+  The license also provides patent protection and does not require derived works to be open-sourced, making nmapUnleashed suitable for professionals, companies, and hobbyists alike.
 
 - **…and more**  
   Check out the [docs](https://docs.nmap-unleashed.com) and help page for all features.
@@ -287,6 +286,7 @@ sharkeonix@pm.me
 ### 📜 Changelog
 | Version | Release Date | Description                                                                                                                                                                                                               |
 |---------|--------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| v1.2.1  | 17.02.2026   | Opening nmapUnleashed for the community and commercial use. Switching license to Apache 2.0. |
 | v1.1.1  | 08.02.2026   | Quickfix. Aborted scans don't have a proper xml file which made the merge scans feature crash. Custom xml elements are now added so aborted scans are listed in scans.xml and scans.html with note that scan was aborted. |
 | v1.1.0  | 03.02.2026   | Adding merged scans feature (`scans.xml`, `scans.html`) and relating options (`-ns`, `-os`, `-oc`).                                                                                                                       |
 | v1.0.0  | 31.01.2026   | Official Release                                                                                                                                                                                                          |
