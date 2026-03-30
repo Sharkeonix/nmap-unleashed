@@ -4,9 +4,9 @@
 
 ![Banner](/docs/assets/banner.png)
 [![Home](https://img.shields.io/badge/🏠-Home-069aeb?labelColor=01cef4)](https://github.com/sharkeonix/nmap-unleashed/)
-[![Installation and Requirements](https://img.shields.io/badge/📦-Installation-069aeb?labelColor=01cef4)](https://github.com/sharkeonix/nmap-unleashed/#-installation-and-requirements)
-[![Quick Usage and Examples](https://img.shields.io/badge/🚀-Quick_Usage-069aeb?labelColor=01cef4)](https://github.com/sharkeonix/nmap-unleashed/#-quick-usage-and-examples)
-[![Commands and Options](https://img.shields.io/badge/🧰-Commands-069aeb?labelColor=01cef4)](https://github.com/sharkeonix/nmap-unleashed/#-commands-and-options)
+[![Installation and Requirements](https://img.shields.io/badge/📦-Installation-069aeb?labelColor=01cef4)](https://github.com/kernelstub/nmap-unleashed/blob/main/docs/installation-and-requirements.md)
+[![Quick Usage and Examples](https://img.shields.io/badge/🚀-Quick_Usage-069aeb?labelColor=01cef4)](https://github.com/kernelstub/nmap-unleashed/blob/main/docs/quick-usage-and-examples.md)
+[![Commands and Options](https://img.shields.io/badge/🧰-Commands-069aeb?labelColor=01cef4)](https://github.com/kernelstub/nmap-unleashed/blob/main/docs/commands-and-options.md)
 [![Docs](https://img.shields.io/badge/📚-Docs-069aeb?labelColor=01cef4)](https://docs.nmap-unleashed.com)
 [![Changelog](https://img.shields.io/badge/📜-Changelog-069aeb?labelColor=01cef4)](https://github.com/sharkeonix/nmap-unleashed/#-changelog)
 [![License](https://img.shields.io/badge/📄-Apache_2.0_License-069aeb?labelColor=01cef4)](https://license.nmap-unleashed.com)
@@ -23,13 +23,12 @@
 ![Dashboard](/docs/assets/dashboard.png)
 
 **Contents**
-- [✨ Feature Summary](/#-feature-summary)
-- [📦 Installation and Requirements](/#-installation-and-requirements)
-- [🚀 Quick Usage and Examples](/#-quick-usage-and-examples)
-- [🧰 Commands and Options](/#-commands-and-options)
-- [🎬 Showcase](/#-showcase)
+- [✨ Feature Summary](https://github.com/kernelstub/nmap-unleashed/blob/main/docs/feature-summary.md)
+- [📦 Installation and Requirements](https://github.com/kernelstub/nmap-unleashed/blob/main/docs/installation-and-requirements.md)
+- [🚀 Quick Usage and Examples](https://github.com/kernelstub/nmap-unleashed/blob/main/docs/quick-usage-and-examples.md)
+- [🧰 Commands and Options](https://github.com/kernelstub/nmap-unleashed/blob/main/docs/commands-and-options.md)
 - [📄 License](https://license.nmap-unleashed.com)
-- [🤝 Contributing and Contact](/#-contributing--credits-and-contact)
+- [🤝 Contributing and Contact](https://github.com/kernelstub/nmap-unleashed/blob/main/docs/contributing-and-contact.md)
 - [📜 Changelog](/#-changelog)
 
 <br>
