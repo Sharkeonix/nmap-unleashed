@@ -239,6 +239,7 @@ def main(
         noDashboardFile: Annotated[bool, typer.Option('-nd', "--no-dashboard", help="Do not create the dashboard.txt file (holding an overview over performed scans and their states).", rich_help_panel=f'[{COLORS["lightCyan"]} bold]nmapUnleashed Output Options[/{COLORS["lightCyan"]} bold]')] = CONFIG["configuration"]["NO_DASHBOARD_FILE"],
         noScansFile: Annotated[bool, typer.Option('-ns', "--no-scans", help="Do not create the scans.xml and scans.html file (holding the merged scan results).", rich_help_panel=f'[{COLORS["lightCyan"]} bold]nmapUnleashed Output Options[/{COLORS["lightCyan"]} bold]')] = CONFIG["configuration"]["NO_SCANS_FILE"],
         onlyScansFile: Annotated[bool, typer.Option('-os', "--only-scans", help="Only create the scans.xml and scans.html file (holding the merged scan results) and no files for each individual scan.", rich_help_panel=f'[{COLORS["lightCyan"]} bold]nmapUnleashed Output Options[/{COLORS["lightCyan"]} bold]')] = CONFIG["configuration"]["ONLY_SCANS_FILE"],
+        mergedScanFile: Annotated[str, typer.Option('-mf', "--merged-filename", help="Set the filename (without extension) for the merged scan results (scans.xml / scans.html).", rich_help_panel=f'[{COLORS["lightCyan"]} bold]nmapUnleashed Output Options[/{COLORS["lightCyan"]} bold]', metavar="<filename>")] = CONFIG["configuration"]["MERGED_SCAN_FILE"],
         originalColors: Annotated[bool, typer.Option('-oc', "--original-colors", help="Do not tamper the scans.html and keep nmap's original color scheme.", rich_help_panel=f'[{COLORS["lightCyan"]} bold]nmapUnleashed Output Options[/{COLORS["lightCyan"]} bold]')] = CONFIG["configuration"]["ORIGINAL_COLORS"],
 
         # Misc options
@@ -399,6 +400,8 @@ def main(
     CONFIG["configuration"]["NO_SCANS_FILE"] = noScansFile
     # Adjust config if only scans.xml and scans.html should be created and no individual scan files
     CONFIG["configuration"]["ONLY_SCANS_FILE"] = onlyScansFile
+    # Adjust config for the merged scan filename
+    CONFIG["configuration"]["MERGED_SCAN_FILE"] = mergedScanFile
     # Adjust config if nmap's original color scheme should be used for the scans.html
     CONFIG["configuration"]["ORIGINAL_COLORS"] = originalColors
     # Adjust config for static dashboard size
